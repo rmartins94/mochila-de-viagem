@@ -26,10 +26,10 @@ form.addEventListener("submit", (event) => {
 
         atualizaElemento(itemAtual);
 
-        itens[existe.id] = itemAtual;
+        itens[existe,findIndex(element => element.id === existe.id)] = itemAtual;
 
     } else {
-        itemAtual.id = itens.length;
+        itemAtual.id = itens [itens. Length -1] ? (itens[itens.length-1]).id + 1 : 0;
 
         criaElemento(itemAtual);
 
@@ -58,6 +58,7 @@ numeroItem.dataset.id = item.id
 novoItem.appendChild(numeroItem);
 novoItem.innerHTML += item.nome;
 
+novoItem.appendChild(botaoDeleta(item.id))
 
 lista.appendChild(novoItem);
 
@@ -65,4 +66,23 @@ lista.appendChild(novoItem);
 
 function atualizaElemento (item) {
     document.querySelector("[data-id='"=item.id+"']").innerHTML = item.quantidade
+}
+
+function botaoDeleta(id) {
+    const elementBotao = document.createElement("button");
+    elementBotao.innerText = "X";
+
+        elementBotao.addEventListener("click", function() {
+            deletaElemento(this.parentNode, id)
+        })
+    return elementBotao
+}
+
+function deletaElemento (tag, id) {
+    tag.remove();
+
+    itens.splice(itens.findIndex(element => element.id === id));
+
+    localStorage.setItem("itens", JSON.stringify(itens));
+
 }
